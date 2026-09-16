@@ -3,6 +3,19 @@ import Barier from "../etc/Barier";
 import Card from "../etc/Card";
 import Icons from "../etc/Icons";
 
+const appIconModules = import.meta.glob("../../assets/about/appIcon/*.png", {
+    eager: true,
+    query: "?url",
+    import: "default",
+}) as Record<string, string>;
+
+const appIcons = Object.fromEntries(
+    Object.entries(appIconModules).map(([path, url]) => [
+        path.split("/").pop()!.replace(/\.png$/, ""),
+        url,
+    ])
+);
+
 const artSkills = [
     {
         icon: <Icons name="brush" size={45} alt="brush" />,
@@ -60,14 +73,14 @@ const animationSkills = [
 ];
 
 const tools = [
-    { name: "After Effect", iconUrl: "src/assets/about/appIcon/Logo_AE.png" },
-    { name: "Illustrator", iconUrl: "src/assets/about/appIcon/Logo_AI.png" },
-    { name: "Blender", iconUrl: "src/assets/about/appIcon/Logo_Blender.png" },
-    { name: "Clip Studio Paint", iconUrl: "src/assets/about/appIcon/Logo_CSP.png" },
-    { name: "Figma", iconUrl: "src/assets/about/appIcon/Logo_Figma.png" },
-    { name: "Photoshop", iconUrl: "src/assets/about/appIcon/Logo_PS.png" },
-    { name: "Spine", iconUrl: "src/assets/about/appIcon/Logo_Spine.png" },
-    { name: "Unity", iconUrl: "src/assets/about/appIcon/Logo_Unity.png" },
+    { name: "After Effect", iconUrl: appIcons["Logo_AE"] },
+    { name: "Illustrator", iconUrl: appIcons["Logo_AI"] },
+    { name: "Blender", iconUrl: appIcons["Logo_Blender"] },
+    { name: "Clip Studio Paint", iconUrl: appIcons["Logo_CSP"] },
+    { name: "Figma", iconUrl: appIcons["Logo_Figma"] },
+    { name: "Photoshop", iconUrl: appIcons["Logo_PS"] },
+    { name: "Spine", iconUrl: appIcons["Logo_Spine"] },
+    { name: "Unity", iconUrl: appIcons["Logo_Unity"] },
 ];
 
 export default function AboutMe() {

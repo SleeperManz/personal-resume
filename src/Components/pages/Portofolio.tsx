@@ -5,23 +5,39 @@ import FrameImage from "../etc/FrameImage";
 
 const filters = ["ALL", "ILLUSTRATION", "ANIMATION", "GAME", "3D"];
 
+const portfolioModules = import.meta.glob(
+    "../../assets/portofolio/**/*.{png,jpg,jpeg,mp4}",
+    {
+        eager: true,
+        query: "?url",
+        import: "default",
+    }
+) as Record<string, string>;
+
+const portfolioMedia = Object.fromEntries(
+    Object.entries(portfolioModules).map(([path, url]) => [
+        path.split("/").pop()!.replace(/\.(png|jpe?g|mp4)$/i, ""),
+        url,
+    ])
+);
+
 const portfolioItems = [
-    { title: "Last Bell", imageUrl: "src/assets/portofolio/game/last-bell.png", category: "GAME", tag: "#GAME", platform: "STEAM" },
-    { title: "Feather Rogue", imageUrl: "src/assets/portofolio/game/feather-rogue.png", category: "GAME", tag: "#GAME", platform: "STEAM" },
-    { title: "Hand Royal", imageUrl: "src/assets/portofolio/game/hand-royale.png", category: "GAME", tag: "#GAME", platform: "STEAM" },
-    { title: "", imageUrl: "src/assets/portofolio/illustration/concept_banshee.jpg", category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
-    { title: "", imageUrl: "src/assets/portofolio/illustration/Fiverr Portfolio 2.png", category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
-    { title: "", imageUrl: "src/assets/portofolio/illustration/Fiverr Portfolio 3.png", category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
-    { title: "", imageUrl: "src/assets/portofolio/illustration/Fiverr Portfolio 4.png", category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
-    { title: "", imageUrl: "src/assets/portofolio/illustration/Fiverr Portfolio 5.png", category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
-    { title: "", imageUrl: "src/assets/portofolio/illustration/modelsheet_darina.png", category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
-    { title: "", imageUrl: "src/assets/portofolio/illustration/Test-game-style3.png", category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
-    { title: "", imageUrl: "src/assets/portofolio/animations/Activity Fishing Preview_00000.mp4", category: "ANIMATION", tag: "#ANIMATION" },
-    { title: "", imageUrl: "src/assets/portofolio/animations/Activity Painting Preview_00000.mp4", category: "ANIMATION", tag: "#ANIMATION" },
-    { title: "", imageUrl: "src/assets/portofolio/animations/Activity Reading Preview_00000.mp4", category: "ANIMATION", tag: "#ANIMATION" },
-    { title: "", imageUrl: "src/assets/portofolio/animations/Activity Ride Bike Preview_00000.mp4", category: "ANIMATION", tag: "#ANIMATION" },
-    { title: "", imageUrl: "src/assets/portofolio/animations/Activity Singing Preview_00000.mp4", category: "ANIMATION", tag: "#ANIMATION" },
-    { title: "", imageUrl: "src/assets/portofolio/animations/Activity Writing Preview_00000.mp4", category: "ANIMATION", tag: "#ANIMATION" },
+    { title: "Last Bell", imageUrl: portfolioMedia["last-bell"], category: "GAME", tag: "#GAME", platform: "STEAM" },
+    { title: "Feather Rogue", imageUrl: portfolioMedia["feather-rogue"], category: "GAME", tag: "#GAME", platform: "STEAM" },
+    { title: "Hand Royal", imageUrl: portfolioMedia["hand-royale"], category: "GAME", tag: "#GAME", platform: "STEAM" },
+    { title: "", imageUrl: portfolioMedia["concept_banshee"], category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
+    { title: "", imageUrl: portfolioMedia["Fiverr Portfolio 2"], category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
+    { title: "", imageUrl: portfolioMedia["Fiverr Portfolio 3"], category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
+    { title: "", imageUrl: portfolioMedia["Fiverr Portfolio 4"], category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
+    { title: "", imageUrl: portfolioMedia["Fiverr Portfolio 5"], category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
+    { title: "", imageUrl: portfolioMedia["modelsheet_darina"], category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
+    { title: "", imageUrl: portfolioMedia["Test-game-style3"], category: "ILLUSTRATION", tag: "#ILLUSTRATION" },
+    { title: "", imageUrl: portfolioMedia["Activity Fishing Preview_00000"], category: "ANIMATION", tag: "#ANIMATION" },
+    { title: "", imageUrl: portfolioMedia["Activity Painting Preview_00000"], category: "ANIMATION", tag: "#ANIMATION" },
+    { title: "", imageUrl: portfolioMedia["Activity Reading Preview_00000"], category: "ANIMATION", tag: "#ANIMATION" },
+    { title: "", imageUrl: portfolioMedia["Activity Ride Bike Preview_00000"], category: "ANIMATION", tag: "#ANIMATION" },
+    { title: "", imageUrl: portfolioMedia["Activity Singing Preview_00000"], category: "ANIMATION", tag: "#ANIMATION" },
+    { title: "", imageUrl: portfolioMedia["Activity Writing Preview_00000"], category: "ANIMATION", tag: "#ANIMATION" },
 ];
 
 export default function Portofolio() {
@@ -46,11 +62,10 @@ export default function Portofolio() {
                     <button
                         key={f}
                         onClick={() => setActiveFilter(f)}
-                        className={`px-3 py-1 text-xs font-bold uppercase rounded transition-colors ${
-                            activeFilter === f
+                        className={`px-3 py-1 text-xs font-bold uppercase rounded transition-colors ${activeFilter === f
                                 ? "bg-[#0E418D] text-white"
                                 : "bg-[#D9D9D9] text-black hover:bg-gray-500 hover:text-white"
-                        }`}
+                            }`}
                     >
                         {f}
                     </button>
